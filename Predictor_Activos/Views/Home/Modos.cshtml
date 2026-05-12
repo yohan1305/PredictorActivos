@@ -1,0 +1,99 @@
+﻿@using Aplicacion.Enums
+@{
+    ViewData["Title"] = "Modos de Predicción";
+    var modoActual = ViewBag.ModoActual as ModoPrediccion?;
+    var mensaje = TempData["Mensaje"] as string;
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-8 text-center mb-4">
+        <h2 class="fw-bold"><i class="bi bi-gear-wide-connected text-primary me-2"></i>Configuración de Algoritmo</h2>
+        <p class="text-muted">Personaliza la lógica de análisis para tus predicciones de activos.</p>
+    </div>
+
+    <div class="col-md-7">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-5">
+                <form asp-action="CambiarModo" method="post" id="formModos">
+                    <div class="mb-4">
+                        <label for="modo" class="form-label fw-semibold mb-3">
+                            <i class="bi bi-cpu me-2"></i>Selecciona el motor de cálculo:
+                        </label>
+
+                        <div class="list-group">
+                            <!-- Opción SMA -->
+                            <label class="list-group-item list-group-item-action d-flex align-items-center p-3 border rounded-3 mb-2 shadow-sm" style="cursor:pointer">
+                                <input class="form-check-input me-3 flex-shrink-0" type="radio" name="modo" value="SMA" @(modoActual == ModoPrediccion.SMA ? "checked" : "")>
+                                <div>
+                                    <strong class="d-block text-dark">Media Móvil Simple (SMA) Crossover</strong>
+                                    <small class="text-muted">Analiza cruces de tendencias para detectar cambios de dirección.</small>
+                                </div>
+                                <i class="bi bi-graph-up text-primary ms-auto fs-4"></i>
+                            </label>
+
+                            <!-- Opción Regresión -->
+                            <label class="list-group-item list-group-item-action d-flex align-items-center p-3 border rounded-3 mb-2 shadow-sm" style="cursor:pointer">
+                                <input class="form-check-input me-3 flex-shrink-0" type="radio" name="modo" value="Regresion" @(modoActual == ModoPrediccion.Regresion ? "checked" : "")>
+                                <div>
+                                    <strong class="d-block text-dark">Regresión Lineal</strong>
+                                    <small class="text-muted">Predice valores futuros basándose en la tendencia lineal histórica.</small>
+                                </div>
+                                <i class="bi bi-bezier2 text-info ms-auto fs-4"></i>
+                            </label>
+
+                            <!-- Opción ROC -->
+                            <label class="list-group-item list-group-item-action d-flex align-items-center p-3 border rounded-3 mb-2 shadow-sm" style="cursor:pointer">
+                                <input class="form-check-input me-3 flex-shrink-0" type="radio" name="modo" value="ROC" @(modoActual == ModoPrediccion.ROC ? "checked" : "")>
+                                <div>
+                                    <strong class="d-block text-dark">Momentum (ROC)</strong>
+                                    <small class="text-muted">Mide la velocidad de cambio en el precio de los activos.</small>
+                                </div>
+                                <i class="bi bi-lightning-charge text-warning ms-auto fs-4"></i>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                            <i class="bi bi-save2 me-2"></i>Aplicar Configuración
+                        </button>
+                        <a asp-action="Index" class="btn btn-link text-muted">Cancelar y volver</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Manejo del mensaje con SweetAlert2
+            @if (!string.IsNullOrEmpty(mensaje))
+            {
+                    <text>
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Configuración Guardada',
+                        text: '@mensaje',
+                        timer: 1500,
+                        showConfirmButton: false,
+                        background: '#f8f9fa',
+                        timerProgressBar: true
+                    }).then(() => {
+                        window.location.href = "/Home/Index";
+                    });
+                    </text>
+            }
+
+            // Mejorar la interacción visual al seleccionar
+            const options = document.querySelectorAll('.list-group-item');
+            options.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    options.forEach(o => o.classList.remove('bg-light', 'border-primary'));
+                    opt.classList.add('bg-light', 'border-primary');
+                });
+            });
+        });
+    </script>
+}
