@@ -1,5 +1,4 @@
 # Asset Trend Predictor (Stocks & Crypto) 📈
----
 **Asset Trend Predictor** es una potente plataforma de análisis cuantitativo desarrollada en **ASP.NET Core 9.0**. El sistema está diseñado para procesar series temporales de activos financieros (acciones y criptomonedas) y proyectar tendencias mediante modelos matemáticos avanzados. La aplicación permite a los usuarios cargar datos históricos de 20 días y aplicar diferentes algoritmos de predicción para determinar si un activo tendrá un comportamiento alcista o bajista.
 
 ⚙️ Inteligencia Predictiva y Modos de Análisis
@@ -46,7 +45,7 @@ El proyecto sigue una estructura desacoplada basada en el patrón **MVC**, cumpl
 * **Resultado: Histórico de Momentum (ROC)**
   <img src="screenshots/ResultadoMomentum.png">
 
-## 👨‍💻 Lead Developer
+ 👨‍💻 Lead Developer
 ---
 * **Yohansel Mieses** – miesesyohansel@gmail.com
 * *Desarrollador enfocado en ingeniería de software, análisis cuantitativo y desarrollo de sistemas escalables en el ecosistema .NET.*
